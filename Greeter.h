@@ -22,6 +22,7 @@ signals:
     void newSession();
     void openSession(int id);
     void passwordEntered(QString username, QString password);
+    void cancelOpenSession();
 
 public slots:
     void setSessionList(QMap<int, Session> list);
@@ -29,8 +30,10 @@ public slots:
     void passwordRequested(bool includeUsername);
 
 protected slots:
-    void errorOkButtonClicked();
+    void showHome();
     void passwordButtonClicked();
+    void showSessions();
+    void cancelAuthentication();
 
 protected:
     virtual void closeEvent(QCloseEvent *);

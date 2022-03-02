@@ -25,6 +25,7 @@ public slots:
     void newSession();
     void openSession(int id);
     void sendPassword(QString username, QString password);
+    void cancelOpenSession();
 
 private slots:
     void read();

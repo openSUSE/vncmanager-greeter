@@ -68,21 +68,26 @@ void ManagerConnection::askForPassword(bool includeUsername)
 
 void ManagerConnection::newSession()
 {
-    out << "NEW" << endl;
+    out << "NEW" << Qt::endl;
 }
 
 void ManagerConnection::openSession(int id)
 {
-    out << "OPEN " << id << endl;
+    out << "OPEN " << id << Qt::endl;
 }
 
 void ManagerConnection::sendPassword(QString username, QString password)
 {
     if (username.isEmpty()) {
-        out << "PASSWORD " << password << endl;
+        out << "PASSWORD " << password << Qt::endl;
     } else {
-        out << "CREDENTIALS " << username << " " << password << endl;
+        out << "CREDENTIALS " << username << " " << password << Qt::endl;
     }
+}
+
+void ManagerConnection::cancelOpenSession()
+{
+    out << "CANCEL" << Qt::endl;
 }
 
 #include "ManagerConnection.moc"

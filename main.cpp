@@ -23,6 +23,7 @@ int main(int argc, char **argv)
 
     QObject::connect(&greeter, SIGNAL(newSession()), &connection, SLOT(newSession()));
     QObject::connect(&greeter, SIGNAL(openSession(int)), &connection, SLOT(openSession(int)));
+    QObject::connect(&greeter, SIGNAL(cancelOpenSession()), &connection, SLOT(cancelOpenSession()));
 
     QObject::connect(&connection, SIGNAL(passwordRequested(bool)), &greeter, SLOT(passwordRequested(bool)));
     QObject::connect(&greeter, SIGNAL(passwordEntered(QString, QString)), &connection, SLOT(sendPassword(QString, QString)));
