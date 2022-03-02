@@ -1,0 +1,129 @@
+
+
+
+QMainWindow
+{
+	border-image: url("/usr/share/vncmanager-greeter/opensuse_background.png") 0 0 0 0 stretch stretch;
+}
+
+/*-----QWidget-----*/
+QWidget
+{
+	color: #ffffff;
+	font-family: Roboto;
+	font-weight: bold;
+}
+
+/*-----QLabel-----*/
+QLabel
+{
+	background-color: transparent;
+	color: #ffffff;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+QLabel#passwordWarning
+{
+	color: #c9b75b;
+}
+
+/*-----QPushButton-----*/
+QPushButton
+{
+	background-color: #74ba24; 
+	color: #ffffff;
+	font-size: 20px;
+	border-radius: 40px;
+}
+
+QPushButton::hover
+{
+	background-color: #487515;
+}
+
+.secondaryButton
+{
+	background-color: #74ba24; 
+	color: #ffffff;
+}
+
+.secondaryButton::hover
+{
+	background-color: #487515;
+}
+
+/*-----QScrollBarButton-----*/
+QScrollArea  
+{
+	background-color: transparent;
+}
+
+QWidget#sessionList  
+{
+	background-color: transparent;
+}
+
+QScrollArea QPushButton
+{
+	border-radius: 35px;
+	font-size: 17px;
+}
+
+/*------QDialogButtonBox------*/
+QDialogButtonBox QPushButton
+{
+	background-color: #74ba24;
+	padding: 10px 35px;
+	border-radius: 20px;
+	color: #ffffff;
+}
+
+QDialogButtonBox QPushButton::hover
+{
+	background-color: #487515;
+}
+
+QDialogButtonBox *[text = "Cancel"] 
+{
+	background-color: #0076a8;
+}
+
+QDialogButtonBox *[text = "Cancel"]::hover
+{
+	background-color: #004663;
+}
+
+/*-----QLineEdit-----*/
+QLineEdit
+{
+	background-color: #c2c7d5;
+	color: #000000;
+	font-size: 20px;
+	border: none;
+	border-radius: 15px;
+	padding: 3px;
+}
+
+/*-----QScrollBar-----*/
+QScrollBar:vertical 
+{
+    background-color: transparent;
+    width: 8px;
+}
+
+
+QScrollBar::handle:vertical 
+{
+    border: none;
+    background-color: #74ba24;
+}
+
+QScrollBar::add-line:vertical, 
+QScrollBar::sub-line:vertical,
+QScrollBar::add-page:vertical, 
+QScrollBar::sub-page:vertical 
+{
+    height: 0px;
+    background-color: transparent;
+}

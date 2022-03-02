@@ -1,5 +1,6 @@
 #include "Greeter.h"
 
+#include <QSettings>
 #include <QtGui/QCloseEvent>
 #include <QtGui/QScreen>
 #include <QtGui/QWindow>
@@ -21,6 +22,9 @@ Greeter::Greeter()
     connect(ui.submitPasswordBtn, SIGNAL(rejected()), this, SLOT(cancelAuthentication()));
 
     connect(ui.errorOkBtn, SIGNAL(accepted()), this, SLOT(showHome()));
+
+    QSettings settings(QString("/etc/vnc/vncmanager-greeter.conf"), QSettings::defaultFormat());
+    setStyle(settings.value("style").toString());
 }
 
 Greeter::~Greeter()
@@ -106,6 +110,7 @@ void Greeter::passwordButtonClicked()
     ui.username->setDisabled(true);
     ui.submitPasswordBtn->setDisabled(true);
     ui.passwordWarning->setVisible(false);
+}
 
 void Greeter::cancelAuthentication()
 {
@@ -120,6 +125,13 @@ void Greeter::cancelAuthentication()
 
     ui.stackedWidget->setCurrentWidget(ui.pageSessions);
 }
+
+void Greeter::setStyle(QString style)
+{
+    QFile qss(style);
+    qss.open(QFile::ReadOnly);
+    this->setStyleSheet(qss.readAll());
+    qss.close();
 }
 
 #include "Greeter.moc"

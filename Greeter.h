@@ -34,6 +34,7 @@ protected slots:
     void passwordButtonClicked();
     void showSessions();
     void cancelAuthentication();
+    void setStyle(QString style);
 
 protected:
     virtual void closeEvent(QCloseEvent *);

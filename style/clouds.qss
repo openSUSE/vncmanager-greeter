@@ -1,0 +1,133 @@
+
+
+
+QMainWindow
+{
+	border-image: url("/usr/share/vncmanager-greeter/clouds_background.png") 0 0 0 0 stretch stretch;
+}
+
+/*-----QWidget-----*/
+QWidget
+{
+	color: #ffffff;
+	font-family: Noto Sans;
+}
+
+/*-----QLabel-----*/
+QLabel
+{
+	background-color: transparent;
+	color: #ffffff;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+QLabel#passwordWarning
+{
+	color: #F6D860;
+}
+
+/*-----QPushButton-----*/
+QPushButton
+{
+	background-color: #EA5C2B; 
+	color: #000000;
+	font-size: 20px;
+	font-weight: bold;
+	border: none;
+}
+
+QPushButton::hover
+{
+	background-color: #BA5D32;
+}
+
+.secondaryButton
+{
+	background-color: transparent;
+	border: 3px solid #2EE37A;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+.secondaryButton::hover
+{
+	background-color: transparent;
+	border-width: 5px;
+}
+
+/*-----QScrollBarButton-----*/
+QScrollArea  
+{
+	background-color: transparent;
+}
+
+QWidget#sessionList  
+{
+	background-color: transparent;
+}
+
+QScrollArea QPushButton
+{
+	font-size: 18px;
+}
+
+/*------QDialogButtonBox------*/
+QDialogButtonBox QPushButton
+{
+	background-color: #EA5C2B;
+	padding: 10px 35px;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+QDialogButtonBox QPushButton::hover
+{
+	background-color: #BA5D32;
+}
+
+QDialogButtonBox *[text = "Cancel"] 
+{
+	background-color: transparent;
+	border: 3px solid #2EE37A;
+}
+
+QDialogButtonBox *[text = "Cancel"]::hover
+{
+	background-color: transparent;
+	border-width: 5px;
+}
+
+/*-----QLineEdit-----*/
+QLineEdit
+{
+	background-color: #c2c7d5;
+	color: #000000;
+	font-size: 20px;
+	border: none;
+	border-radius: 2px;
+	padding: 3px;
+}
+
+/*-----QScrollBar-----*/
+QScrollBar:vertical 
+{
+    background-color: transparent;
+    width: 8px;
+}
+
+QScrollBar::handle:vertical 
+{
+    border: none;
+    background-color: #2EE37A;
+}
+
+
+QScrollBar::add-line:vertical, 
+QScrollBar::sub-line:vertical,
+QScrollBar::add-page:vertical, 
+QScrollBar::sub-page:vertical 
+{
+    height: 0px;
+    background-color: transparent;
+}
