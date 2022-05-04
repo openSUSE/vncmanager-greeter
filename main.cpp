@@ -1,35 +1,38 @@
-#include <iostream>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QSettings>
+#include <QQmlContext>
+#include <QQmlComponent>
 
-#include <QtCore/QMap>
-#include <QtCore/QString>
-#include <QtWidgets/QApplication>
-#include <QtGui/QScreen>
-
-#include "Greeter.h"
+#include "ManagerConnection.h"
 
 
 int main(int argc, char **argv)
 {
-    setenv("DBUS_SESSION_BUS_ADDRESS", "UglyHack", true); // I need the attempt to connect to session dbus fail as fast as possible, instead of trying to start dbus-launch and failing anyway!
+    QGuiApplication app(argc, argv);
 
-    QApplication app(argc, argv);
+    QQmlApplicationEngine engine;
+
+    QSettings settings(QString("/etc/vnc/vncmanager-greeter.conf"), QSettings::defaultFormat());
+    QQmlComponent styleComponent(&engine, QUrl(QString("file:") + settings.value("style").toString()));
+    QObject *styleObject = styleComponent.create();
+    engine.rootContext()->setContextProperty("Style", styleObject);
+
+    engine.load(QUrl(QString("qrc:/vncmanager_greeter/greeter.qml")));
 
     ManagerConnection connection;
-    Greeter greeter;
+    QObject *greeter = engine.rootObjects().first();
 
-    QObject::connect(&connection, SIGNAL(sessionListReceived(QMap<int, Session>)), &greeter, SLOT(setSessionList(QMap<int, Session>)));
+    QObject::connect(&connection, SIGNAL(sessionListReceived(QVariant)), greeter, SLOT(setSessionList(QVariant)));
 
-    QObject::connect(&connection, SIGNAL(errorReceived(QString)), &greeter, SLOT(showError(QString)));
+    QObject::connect(greeter, SIGNAL(newSession()), &connection, SLOT(newSession()));
+    QObject::connect(greeter, SIGNAL(openSession(int)), &connection, SLOT(openSession(int)));
+    QObject::connect(greeter, SIGNAL(cancelOpenSession()), &connection, SLOT(cancelOpenSession()));
+     
+    QObject::connect(&connection, SIGNAL(errorReceived(QVariant)), greeter, SLOT(showError(QVariant)));
 
-    QObject::connect(&greeter, SIGNAL(newSession()), &connection, SLOT(newSession()));
-    QObject::connect(&greeter, SIGNAL(openSession(int)), &connection, SLOT(openSession(int)));
-    QObject::connect(&greeter, SIGNAL(cancelOpenSession()), &connection, SLOT(cancelOpenSession()));
-
-    QObject::connect(&connection, SIGNAL(passwordRequested(bool)), &greeter, SLOT(passwordRequested(bool)));
-    QObject::connect(&greeter, SIGNAL(passwordEntered(QString, QString)), &connection, SLOT(sendPassword(QString, QString)));
-
-    greeter.setGeometry(app.screens().first()->availableGeometry());
-    greeter.showFullScreen();
+    QObject::connect(&connection, SIGNAL(passwordRequested(QVariant)), greeter, SLOT(passwordRequested(QVariant)));
+    QObject::connect(greeter, SIGNAL(passwordEntered(QString, QString)), &connection, SLOT(sendPassword(QString, QString)));
 
     return app.exec();
 }

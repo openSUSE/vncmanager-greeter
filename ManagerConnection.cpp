@@ -1,6 +1,5 @@
-#include <stdio.h>
-
 #include <QtCore/QFile>
+#include <QVariantMap>
 
 #include "ManagerConnection.h"
 
@@ -28,7 +27,7 @@ void ManagerConnection::read()
 
 void ManagerConnection::readSessions()
 {
-    QMap<int, Session> list;
+    QVariantMap list;
 
     int count;
     in >> count;
@@ -41,7 +40,7 @@ void ManagerConnection::readSessions()
         in >> username;
         name = in.readLine();
 
-        list.insert(id, Session(name, username));
+        list.insert(QString::number(id), QString(name + "\n(" + username + ")"));
     }
 
     emit sessionListReceived(list);
@@ -89,5 +88,3 @@ void ManagerConnection::cancelOpenSession()
 {
     out << "CANCEL" << Qt::endl;
 }
-
-#include "ManagerConnection.moc"

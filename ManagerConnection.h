@@ -1,13 +1,8 @@
 #ifndef MANAGERCONNECTION_H
 #define MANAGERCONNECTION_H
 
-#include <QtCore/QMap>
-#include <QtCore/QObject>
 #include <QtCore/QSocketNotifier>
-#include <QtCore/QTextStream>
-
-#include "Session.h"
-
+#include <QVariant>
 
 class ManagerConnection : public QObject
 {
@@ -17,9 +12,9 @@ public:
     ManagerConnection();
 
 signals:
-    void sessionListReceived(QMap<int, Session> list);
-    void errorReceived(QString message);
-    void passwordRequested(bool includeUsername);
+    void sessionListReceived(QVariant list);
+    void errorReceived(QVariant message);
+    void passwordRequested(QVariant includeUsername);
 
 public slots:
     void newSession();

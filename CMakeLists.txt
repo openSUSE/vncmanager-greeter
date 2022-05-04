@@ -1,27 +1,30 @@
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.16)
 
 project(vncmanager-greeter)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(GNUInstallDirs)
 
-find_package(Qt5Widgets REQUIRED)
+find_package(Qt6 6.2 COMPONENTS Quick REQUIRED)
 
-add_definitions(-std=c++11)
+qt_add_executable(vncmanager-greeter
+    main.cpp
+    ManagerConnection.cpp
+)
 
-include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
+qt_add_qml_module(vncmanager-greeter
+    URI vncmanager_greeter
+    VERSION 1.0
+    QML_FILES greeter.qml
+)
 
-set(vncmanager-greeter_SRCS Greeter.cpp ManagerConnection.cpp Session.cpp main.cpp)
-
-set(vncmanager-greeter_FORMS Greeter.ui)
-
-qt5_wrap_ui(vncmanager-greeter_FORMS_HEADERS ${vncmanager-greeter_FORMS})
-
-add_executable(vncmanager-greeter ${vncmanager-greeter_SRCS} ${vncmanager-greeter_FORMS_HEADERS})
-target_link_libraries(vncmanager-greeter Qt5::Widgets)
+target_compile_definitions(vncmanager-greeter
+    PRIVATE $<$<CONFIG:Debug>:QT_QML_DEBUG>)
+target_link_libraries(vncmanager-greeter
+    PRIVATE Qt6::Quick)
 
 install(TARGETS vncmanager-greeter RUNTIME DESTINATION bin)
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/vncmanager-greeter.conf" DESTINATION "${CMAKE_INSTALL_FULL_SYSCONFDIR}/vnc")
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/style/" DESTINATION "${CMAKE_INSTALL_DATADIR}/vncmanager-greeter")
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/style/" DESTINATION "${CMAKE_INSTALL_FULL_DATADIR}/vncmanager-greeter")
